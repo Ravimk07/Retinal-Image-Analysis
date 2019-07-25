@@ -6,7 +6,6 @@ Created on Wed Jul 24 17:38:20 2019
 """
 
 
-
 import numpy as np
 import os
 from tensorflow import keras
@@ -14,6 +13,7 @@ from PIL import Image
 import glob
 import cv2
 from matplotlib import pyplot as plt
+import tensorflow as tf
 
 import random
 import argparse 
@@ -53,6 +53,9 @@ dimen= 512
 #
 #img1 = remove_outer_circle(img, 0.95, r)
 #plt.imshow(img1)
+channels = 3
+shape = [dimen, dimen, channels]
+x = tf.placeholder(dtype = tf.float32, shape = shape)
 
 images = list() 
 labels = list()
@@ -68,7 +71,7 @@ for i in range( len( sub_dir_list ) ):
         y, x = np.where(gray_eye == 255.0)
         img= img[np.min(y):np.max(y),np.min(x):np.max(x)]
         image = cv2.resize(img, (dimen, dimen))
-        
+#        cv2.imwrite(str(save_path +image_path), image)
         image_hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
         h_orig, s_orig, v_orig = cv2.split(image_hsv) 
 
@@ -82,7 +85,7 @@ for i in range( len( sub_dir_list ) ):
         image_3 = cv2.merge((h_orig, s_orig, v))
         image_3 = cv2.cvtColor(image_3, cv2.COLOR_HSV2BGR)
         cv2.imwrite(str(save_path+"Brightness_" +image_path), image_3)
-
+ 
 
         # Saturation
         offset = random.randint(-50, 50) 
@@ -94,7 +97,7 @@ for i in range( len( sub_dir_list ) ):
         image_4 = cv2.merge((h_orig, s, v_orig))
         image_4 = cv2.cvtColor(image_4, cv2.COLOR_HSV2BGR)
         
-        cv2.imwrite(str(save_path+"Saturation" +image_path), image_4)
+        cv2.imwrite(str(save_path+"Saturation_" +image_path), image_4)
 
         # Hue
         offset = random.randint(-15, 15)
@@ -105,17 +108,31 @@ for i in range( len( sub_dir_list ) ):
         h = h.astype('uint8')
         image_5 = cv2.merge((h, s_orig, v_orig))
         image_5 = cv2.cvtColor(image_5, cv2.COLOR_HSV2BGR)
-        cv2.imwrite(str(save_path+"Hue" +image_path), image_5)
+        cv2.imwrite(str(save_path+"Hue_" +image_path), image_5)
         
-        
-#        cv2.imwrite(save_path+image_path, resized_image)
-
-
+#        # Flip
+        flipped_imgh = np.fliplr(image)
+        cv2.imwrite(str(save_path+"F_"+image_path), flipped_imgh)
+        flipped_imgv = np.flipud(image)
+        cv2.imwrite(str(save_path+"v_" +image_path), flipped_imgv)
+#        flip_2 = tf.image.flip_up_down(image)
+#        flip_3 = tf.image.flip_left_right(image)
+#        flip_4 = tf.image.random_flip_up_down(image)
+#        flip_5 = tf.image.random_flip_left_right(image)
+#        cv2.imwrite(str(save_path+"v_" +image_path), flip_2)
+#        cv2.imwrite(str(save_path+"v_" +image_path), flip_3)
+#        cv2.imwrite(str(save_path+"v_" +image_path), flip_4)
+#        cv2.imwrite(str(save_path+"v_" +image_path), flip_5)
+#        plt.imshow(flipped_img)
+#        plt.show()
  
-
-
-
- 
+#plt.imshow(flip_2)
+#plt.show()
+#flip_2 = tf.image.flip_up_down(x)
+#flip_3 = tf.image.flip_left_right(x)
+#flip_4 = tf.image.random_flip_up_down(x)
+#flip_5 = tf.image.random_flip_left_right(x)
+  
 
 #file = []
 #for file in len(label_name):
