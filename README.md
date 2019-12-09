@@ -1,3 +1,3 @@
 # Retinal-Image-Analysis
 
-By ravi Kamble a..
+By ravi Kamble
