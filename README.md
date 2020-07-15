@@ -1,2 +1,2 @@
-# Retinal-Image-Analysis.............
+# Retinal-Image-Analysis.
 
