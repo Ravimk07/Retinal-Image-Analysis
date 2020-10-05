@@ -1,3 +1,3 @@
 # Retinal-Image-Analysis
-ravi..........
+ravi.
 
