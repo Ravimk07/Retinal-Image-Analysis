@@ -10,5 +10,5 @@ Fundus images are the images of the interior surface of the eye opposite the len
 
 
 
-ravi kamble...
+Ravi kamble.
 
